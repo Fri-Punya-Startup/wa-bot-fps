@@ -5,20 +5,34 @@ const db = require('../models/db.model');
 const waController = {
     accAcount: async (req, res, next) => {
         try {
-            const {id, phone} = req.body; // Get the body
-            await client.sendMessage(`${phone}@c.us`, "aku sayang kamu"); // Send the message
-            db.query(`
-            UPDATE users SET verifikasi = '1' WHERE users.id = ${id};
-            `, (err, result) => {
-                if (err) {
-                    console.log(err);
-                }
-                console.log(result);
-            });
-            console.log(id, phone);
+            const {id, phone, pass} = req.body; // Get the body
+            msg = `
+*FRI PUNYA STARTUP*
 
+Selamat Akun anda telah berhasil terdaftar.`
+            if( pass == "fpsnihbos" && phone != ""){
+                await client.sendMessage(`${phone}@c.us`, msg); // Send the message
+                db.query(`
+                UPDATE users SET verifikasi = '1' WHERE users.id = ${id};
+                `, (err, result) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                    console.log(result);
+                });
+                return res.json({
+                    status: 'success',
+                });
+            }else{
+                return res.json({
+                    status: 'failed',
+                });
+            }
         } catch (error) {
-          next(error);
+            console.log(error);
+            return res.json({
+                status: 'error',
+            });
         }
     },
 

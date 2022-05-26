@@ -15,15 +15,6 @@ const waRouter = require('./routes/wa.route');
 app.use('/', indexRouter);
 app.use('/wa', waRouter);
 
-client.on('qr', qr => {
-  qrcode.generate(qr, {small: true});
-});
-
-client.on('ready', () => {
-  console.log('Client is ready!');
-});
-
-client.initialize();
 
 app.listen(5000, () => {
   console.log(`Example app listening on port 5000!`);
