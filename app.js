@@ -15,7 +15,9 @@ const waRouter = require('./routes/wa.route');
 app.use('/', indexRouter);
 app.use('/wa', waRouter);
 
+//const browser = async () => {await puppeteer.launch({ignoreDefaultArgs: ['--disable-extensions']})}
+//browser();
 
-app.listen(5000, () => {
-  console.log(`Example app listening on port 5000!`);
+app.listen(5500, () => {
+  console.log(`Example app listening on port 5500`);
 });
