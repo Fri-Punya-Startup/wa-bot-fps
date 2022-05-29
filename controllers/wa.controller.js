@@ -1,27 +1,25 @@
 const {client} = require('../client.wa');
 const axios = require ('axios');
-const db = require('../models/db.model');
+const User = require('../models/user.model');
 
 const waController = {
     accAcount: async (req, res, next) => {
         try {
             const {id, phone, pass} = req.body; // Get the body
-            msg = `
-*FRI PUNYA STARTUP*
+            console.log(req.body);
+            msg = `*FRI PUNYA STARTUP*
 
 Selamat Akun anda telah berhasil terdaftar.`
             if( pass == "fpsnihbos" && phone != ""){
+                
                 await client.sendMessage(`${phone}@c.us`, msg); // Send the message
-                db.query(`
-                UPDATE users SET verifikasi = '1' WHERE users.id = ${id};
-                `, (err, result) => {
-                    if (err) {
-                        console.log(err);
-                    }
-                    console.log(result);
+                
+                let user = await User.findByPk(id);
+                await user.update({
+                    verifikasi: 1,
                 });
-                return res.json({
-                    status: 'success',
+                res.status(200).json({
+                    status: "success",
                 });
             }else{
                 return res.json({
