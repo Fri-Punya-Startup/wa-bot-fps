@@ -22,7 +22,7 @@ client.on('ready', () => {
 client.on('message', msg => {
         const args = msg.body.split(' ');
         const command = args[0];
-
+        pass = 'fps'
         switch(command) {
                 case '/grupid':
                 const updateGrupId = require('./function/updateGrupId');
@@ -32,7 +32,8 @@ client.on('message', msg => {
                 const webinar = require('./automation/webinar');
                 webinar(client,msg);
 
-                case '/tes':
+                case '/id':
+                        msg.reply(msg.from);
                         console.log(msg);                
         }
 });
