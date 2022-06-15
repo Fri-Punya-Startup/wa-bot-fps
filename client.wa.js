@@ -30,7 +30,10 @@ client.on('message', msg => {
 
                 case '/webinar':
                 const webinar = require('./automation/webinar');
-                webinar(client,msg);                
+                webinar(client,msg);
+
+                case '/tes':
+                        console.log(msg.body);                
         }
 });
 
