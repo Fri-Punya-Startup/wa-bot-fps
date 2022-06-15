@@ -33,7 +33,7 @@ client.on('message', msg => {
                 webinar(client,msg);
 
                 case '/tes':
-                        console.log(msg.body);                
+                        console.log(msg);                
         }
 });
 
