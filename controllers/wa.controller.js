@@ -6,7 +6,6 @@ const waController = {
     accAcount: async (req, res, next) => {
         try {
             const {id, phone, pass} = req.body; // Get the body
-            console.log(req.body);
             msg = `*FRI PUNYA STARTUP*
 
 Selamat Akun anda telah berhasil terdaftar.`
@@ -50,6 +49,22 @@ Mohon tunggu pesan whatsapp dari kami bahwa data anda telah diverifikasi.`
         }catch (error) {
             next(error);
         }
+    },
+
+    notif: async (req, res, next) => {
+        const {nama,phone,key,grup} = req.body; // Get the body
+
+        msg = `nama: ${nama}\nskey: ${key}\ngrup: ${grup}`
+
+        try {
+            await client.sendMessage(`${phone}@c.us`,msg); // Send the message
+            res.json({
+                status: 'success',
+            });
+        }catch (error) {
+            next(error);
+        }
+        
     }
 }
 

@@ -1,32 +1,43 @@
+
 const qrcode = require('qrcode-terminal');
 
 const { Client } = require('whatsapp-web.js');
 
 const client = new Client({
-//          session: session,
-          //qrTimeoutMs: 120000,
-          //authTimeoutMs: 120000,
-          //restartOnAuthFail: true,
-          //takeoverOnConflict: true
-          //takeoverTimeoutMs: 5000
   puppeteer: {headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-extensions']}
 });
 
+const pass = '888'
 
-const asu = async () => {
-        await client.on('qr', qr => {
-                qrcode.generate(qr, {small: true});
-        });
+const main = async () => {
 
-        client.on('ready', () => {
-                console.log('Client is ready!');
-        });
+await client.on('qr', qr => {
+        qrcode.generate(qr, {small: true});
+});
 
-        client.initialize();
+client.on('ready', () => {
+        console.log('Client is ready!');
+});
+
+client.on('message', msg => {
+        const args = msg.body.split(' ');
+        const command = args[0];
+
+        switch(command) {
+                case '/grupid':
+                const updateGrupId = require('./function/updateGrupId');
+                updateGrupId(args,msg,pass);
+
+                case '/webinar':
+                const webinar = require('./automation/webinar');
+                webinar(client,msg);                
+        }
+});
+
+client.initialize();
+
 }
 
-asu();
-
-module.exports = {client, qrcode};
+module.exports = {client, qrcode, main};
 
 
